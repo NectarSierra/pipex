@@ -2,14 +2,16 @@ FLAGS = -Wall -Wextra -Werror
 FSAN = -fsanitize=address -g
 NAME = pipex
 LIBFT_A = ./libft/libft.a
-SRCS = ./main.c\
-	   ./get_inout_fd.c\
-	   ./get_valid_path.c\
+SRCS = ./srcs/main.c\
+	   ./srcs/redirect_cmd.c\
+	   ./srcs/path_cmd.c\
+	   ./srcs/errors_handler.c\
+	   ./srcs/utils.c\
 
 $(NAME): $(SRCS)
 	cd ./libft/ && make bonus
 	clear
-	cc $(FLAGS) $(SRCS) ./libft/libft.a -o $(NAME)
+	gcc -g $(FLAGS) $(SRCS) ./libft/libft.a -o $(NAME)
 
 fsan: $(SRCS)
 	cd ./libft/ && make bonus

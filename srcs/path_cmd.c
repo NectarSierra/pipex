@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_valid_path.c                                   :+:      :+:    :+:   */
+/*   path_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsaillez <nsaillez@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:20:20 by nsaillez          #+#    #+#             */
-/*   Updated: 2025/02/18 16:35:46 by nsaillez         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:18:46 by nsaillez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-#include "./libft/libft.h"
+#include "./pipex.h"
 
 char *allocate_path(int i,char *str, char *cmd)
 {
@@ -27,7 +26,7 @@ char *allocate_path(int i,char *str, char *cmd)
 		k++;
 	selected_path = malloc(((i + k) - j + 2) * sizeof(char));
 	if (!selected_path)
-			return (NULL);
+		return (NULL);
 	return (selected_path);
 }
 
@@ -72,8 +71,44 @@ char *find_accessible_path(char *str, char *cmd)
 		i++;
 		j = i;
 	}
-	ft_putstr_fd("Error - command not found: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd("\n", 2);
 	return (NULL);
+}
+
+int check_cmd_validity(char **env, char *cmd)
+{
+	char *result;
+	
+	result = find_accessible_path(srchstrsn(env, "PATH=", 5), cmd);
+	if (result == NULL)
+	{
+		ft_putstr_fd("Error - command not found: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd("\n", 2);
+		free(result);
+		return (-1);
+	}
+	free(result);
+	return (0);
+}
+
+int execute_cmd(char *cmd, char **env)
+{
+	char *argv[3];
+	int size;
+	
+	size = get_cmd_size(cmd);
+	argv[0] = find_accessible_path(srchstrsn(env, "PATH=", 5), cmd);
+	if (!argv[0])
+		return (-2);
+	if (size == 0)
+		argv[1] = NULL;
+	else
+		argv[1] = cmd + size;
+	argv[2] = NULL;
+	if(execve(argv[0], argv, NULL) == -1)
+	{
+		perror("excve failed");
+		return (-1);
+	}
+	return (0);
 }
