@@ -6,7 +6,7 @@
 /*   By: nsaillez <nsaillez@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 10:59:47 by nsaillez          #+#    #+#             */
-/*   Updated: 2025/02/20 13:53:52 by nsaillez         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:00:47 by nsaillez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,10 @@ int str_cmp(char *str1, char *str2)
 int get_n_cmd(int argc, char **argv)
 {
 	int n_cmd;
-	// int i;
 	
-	// i = 0;
 	if (str_cmp(argv[1], "here_doc") == 0)
 		n_cmd = argc - 4;
 	else
 		n_cmd = argc - 3;
-	// while (i < n_cmd)
-	// {
-	// 	if (check_cmd_validity(env, argv[i + 2]) == -1)
-	// 		n_cmd--;
-	// 	i++;
-	// }
 	return (n_cmd);
 }

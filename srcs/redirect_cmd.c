@@ -6,7 +6,7 @@
 /*   By: nsaillez <nsaillez@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 09:49:19 by nsaillez          #+#    #+#             */
-/*   Updated: 2025/02/20 16:02:05 by nsaillez         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:25:50 by nsaillez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@ int create_pipe(char *command, char **env)
 	int pipe_fd[2];
 	pid_t pid;
 
-	if (check_cmd_validity(env, command) != 0)
-		return (-1);
 	if (pipe(pipe_fd) < 0)
 		return (pipe_err());
+	if (check_cmd_validity(env, command) != 0)
+	{
+		close(pipe_fd[1]); ////
+		dup2(pipe_fd[0], STDIN_FILENO); //// last thing added
+		close(pipe_fd[0]); /////
+		return (-1);
+	}
 	pid = fork();
 	if (pid < 0)
 		return (fork_err());

@@ -6,7 +6,7 @@
 /*   By: nsaillez <nsaillez@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 10:58:12 by nsaillez          #+#    #+#             */
-/*   Updated: 2025/02/20 16:57:35 by nsaillez         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:15:47 by nsaillez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int heredoc_manager(int argc, char **argv, char **env)
 	int *wait_list;
 	int fd_io[2];
 	int i;
+	int j;
 	int n_cmd;
 
 	fd_io[0] = create_here_doc_pipe(argv);
@@ -75,11 +76,9 @@ int heredoc_manager(int argc, char **argv, char **env)
 	if (!wait_list)
 		return (malloc_err());
 	i = 0;
-	while (i < (n_cmd - 1))
-	{
-		wait_list[i] = create_pipe(argv[i + 3], env);
-		i++;
-	}
+	j = 0;
+	while (j < (n_cmd - 1))
+		wait_list[j++] = create_pipe(argv[(i++) + 3], env);
 	wait_list[i++] = last_command(argc, argv, env, fd_io[1]);
 	close_waitall(n_cmd, wait_list, fd_io);
 	free(wait_list);

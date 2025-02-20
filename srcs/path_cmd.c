@@ -6,7 +6,7 @@
 /*   By: nsaillez <nsaillez@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:20:20 by nsaillez          #+#    #+#             */
-/*   Updated: 2025/02/20 14:18:46 by nsaillez         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:26:21 by nsaillez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int check_cmd_validity(char **env, char *cmd)
 	result = find_accessible_path(srchstrsn(env, "PATH=", 5), cmd);
 	if (result == NULL)
 	{
-		ft_putstr_fd("Error - command not found: ", 2);
+		ft_putstr_fd("pipex: command not found: ", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd("\n", 2);
 		free(result);

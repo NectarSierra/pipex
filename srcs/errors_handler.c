@@ -6,7 +6,7 @@
 /*   By: nsaillez <nsaillez@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 10:47:40 by nsaillez          #+#    #+#             */
-/*   Updated: 2025/02/20 16:48:04 by nsaillez         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:26:08 by nsaillez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int error_input(char *arg, int i, int n_cmd)
 	dup2(pipe_fd[0], STDIN_FILENO);
 	i = i;
 	n_cmd = n_cmd;
-	ft_putstr_fd("Error - no such file or directory: ", 2);
+	ft_putstr_fd("pipex: no such file or directory: ", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd("\n", 2);
 	return (pipe_fd[0]);
