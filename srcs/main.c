@@ -6,7 +6,7 @@
 /*   By: nsaillez <nsaillez@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 10:58:12 by nsaillez          #+#    #+#             */
-/*   Updated: 2025/02/20 14:02:39 by nsaillez         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:57:35 by nsaillez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void close_waitall(int n_cmd, int *wait_list, int *fd_io)
 	if (fd_io[0] > 0)
 		close(fd_io[0]);
 	close(fd_io[1]);
-	close(STDOUT_FILENO);
 	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	i = 0;
 	while (i < n_cmd)
 	{
@@ -44,16 +44,11 @@ int classic_manager(int argc, char **argv, char **env)
 	j = 0;
 	n_cmd = get_n_cmd(argc, argv);
 	fd_io[0] = open(argv[1], O_RDONLY);
-	ft_putnbr_fd(n_cmd, 2);
 	if (fd_io[0] < 0)
-		error_input(argv[1], i++, n_cmd--);
+		fd_io[0] = error_input(argv[1], i++, n_cmd--);
 	else
-	{
 		dup2(fd_io[0], STDIN_FILENO);
-		close(fd_io[0]);
-	}
 	fd_io[1] = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	ft_putnbr_fd(n_cmd, 2);
 	wait_list = malloc((n_cmd) * sizeof(int));
 	if (!wait_list)
 		return (malloc_err());
@@ -74,7 +69,7 @@ int heredoc_manager(int argc, char **argv, char **env)
 
 	fd_io[0] = create_here_doc_pipe(argv);
 	dup2(fd_io[0], STDIN_FILENO);
-	fd_io[1] = open(argv[argc-1], O_CREAT | O_WRONLY | O_APPEND, 0777);
+	fd_io[1] = open(argv[argc-1], O_CREAT | O_WRONLY | O_APPEND, 0644);
 	n_cmd = get_n_cmd(argc, argv);
 	wait_list = malloc(n_cmd * sizeof(int));
 	if (!wait_list)

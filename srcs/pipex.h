@@ -6,7 +6,7 @@
 /*   By: nsaillez <nsaillez@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:03:44 by nsaillez          #+#    #+#             */
-/*   Updated: 2025/02/20 13:53:23 by nsaillez         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:47:41 by nsaillez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 int		malloc_err();
 int		fork_err();
 int		pipe_err();
-void	error_input(char *arg, int i, int n_cmd);
+int		error_input(char *arg, int i, int n_cmd);
 
 /*MAIN_C*/
 void close_waitall(int n_cmd, int *wait_list, int *fd_io);
